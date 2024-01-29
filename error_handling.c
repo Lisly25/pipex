@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:43:37 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/29 11:57:10 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:44:14 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	ft_message_and_exit(char *str)
 	exit (1);
 }
 
-void	ft_close_fds(int **fd)
+void	ft_close_fds(int *fd)
 {
-	close(*fd[0]);
-	close(*fd[1]);
+	close(fd[PIPE_READ_END]);
+	close(fd[PIPE_WRITE_END]);
 }
 
 void	free_2d_array(char **arr)
@@ -35,4 +35,10 @@ void	free_2d_array(char **arr)
 		i++;
 	}
 	free(arr);
+}
+
+void	ft_free_and_exit(char *str, char **arr)
+{
+	free_2d_array(arr);
+	ft_putendl_fd(str, 2);
 }
