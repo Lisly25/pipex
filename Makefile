@@ -6,15 +6,17 @@
 #    By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 15:34:44 by skorbai           #+#    #+#              #
-#    Updated: 2024/01/25 16:12:08 by skorbai          ###   ########.fr        #
+#    Updated: 2024/01/29 11:51:02 by skorbai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 C_FLAGS = -Wall -Wextra -Werror
 
 SRCS = main.c \
+	error_handling.c \
 	exec_first_command.c \
-	exec_second_command.c
+	exec_second_command.c \
+	exec_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
