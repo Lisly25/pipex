@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:40:44 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/29 16:10:13 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:49:55 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ pid_t	init_child(void)
 	pid_t	child;
 
 	child = fork();
-	if (child < 1)
+	if (child < 0)
 		ft_message_and_exit("Error: fork() failed");
 	return (child);
 }
