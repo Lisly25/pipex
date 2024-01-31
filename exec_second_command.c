@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:09:51 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 14:39:49 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:57:30 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	exec_second_command(char *cmd2, char *file2, char ***env, int *fd)
 	command = ft_split(cmd2, ' ');
 	if (command == NULL)
 		ft_message_and_exit("Malloc fail");
-	path = find_correct_path_cmd2(command, env);
+	path = find_correct_path_cmd2(&command, env);
 	while (path != NULL)
 	{
 		execve(path, command, *env);
 		free(path);
-		path = find_correct_path_cmd2(command, env);
+		path = find_correct_path_cmd2(&command, env);
 	}
 	ft_free_and_exit("Failed to execute cmd 2", command);
 }

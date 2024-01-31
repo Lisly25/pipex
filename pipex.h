@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 15:54:23 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:58:10 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	exec_first_command(char *file1, char *cmd1, char ***env, int *fd);
 
 void	exec_second_command(char *cmd2, char *file2, char ***env, int *fd);
 
-char	*find_correct_path(char **command, char ***env);
+char	*find_correct_path(char ***command, char ***env);
 
-char	*find_correct_path_cmd2(char **command, char ***env);
+char	*find_correct_path_cmd2(char ***command, char ***env);
 
 void	deleteme_arr_print(char **arr);//DELETEME
 
