@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 15:15:37 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:54:23 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ char	**dup_2d_arr(char **arr);
 
 char	*path_strjoin(char ***paths, char ***commands, int i);
 
-void	find_path_own_exec(char **command);
-
-int		is_shell_command(char **command);
+void	run_if_shell_command(char ***command_ptr, char ***env_ptr);
 
 char	**find_paths(char ***environmentals, char ***command);
 

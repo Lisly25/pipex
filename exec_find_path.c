@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:54:27 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 15:19:19 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:51:47 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,27 @@ char	*find_correct_path(char **command, char ***env)
 	static int	i = -1;
 	char		*full_path;
 
-	if (is_shell_command(command) == 1)
-		find_path_own_exec(command);
-	all_paths = find_paths(env, &command);
+	run_if_shell_command(&command, env);
 	if (i == -1)
 	{
 		full_path = find_bultin_path();
+		i++;
 		if (full_path != NULL)
 			return (full_path);
-		i++;
 	}
+	all_paths = find_paths(env, &command);
 	while (all_paths[i] != NULL)
 	{
 		full_path = path_strjoin(&all_paths, &command, i);
-		if (access(full_path, X_OK) == -1)
-			i++;
-		else
-		{
-			free_2d_array(all_paths);
-			i++;
-			return (full_path);
-		}
+		i++;
+		if (access(full_path, X_OK) == 0)
+			break ;
+		free(full_path);
 	}
 	free_2d_array(all_paths);
-	return (NULL);
+	if (all_paths[i] == NULL)
+		return (NULL);
+	return (full_path);
 }
 
 char	*find_correct_path_cmd2(char **command, char ***env)
@@ -58,28 +55,25 @@ char	*find_correct_path_cmd2(char **command, char ***env)
 	static int	i = -1;
 	char		*full_path;
 
-	if (is_shell_command(command) == 1)
-		find_path_own_exec(command);
-	all_paths = find_paths(env, &command);
+	run_if_shell_command(&command, env);
 	if (i == -1)
 	{
 		full_path = find_bultin_path();
+		i++;
 		if (full_path != NULL)
 			return (full_path);
-		i++;
 	}
+	all_paths = find_paths(env, &command);
 	while (all_paths[i] != NULL)
 	{
 		full_path = path_strjoin(&all_paths, &command, i);
-		if (access(full_path, X_OK) == -1)
-			i++;
-		else
-		{
-			free_2d_array(all_paths);
-			i++;
-			return (full_path);
-		}
+		i++;
+		if (access(full_path, X_OK) == 0)
+			break ;
+		free(full_path);
 	}
 	free_2d_array(all_paths);
-	return (NULL);
+	if (all_paths[i] == NULL)
+		return (NULL);
+	return (full_path);
 }
