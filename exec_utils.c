@@ -6,16 +6,17 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 14:20:13 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:18:30 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_path_env_variable(char ***environmentals)
+char	**find_paths(char ***environmentals, char ***command)
 {
 	int		i;
-	char	*result;
+	char	**result;
+	char	*path_str;
 	char	**env;
 
 	env = *environmentals;
@@ -24,122 +25,53 @@ static char	*find_path_env_variable(char ***environmentals)
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
-			result = ft_strchr(env[i], '/');
+			path_str = ft_strchr(env[i], '/');
+			result = ft_split(path_str, ':');
 			return (result);
 		}
 		else
 			i++;
 	}
+	ft_free_and_exit("Error: Failed to locate PATH", *command);
 	return (NULL);
 }
 
-static int	is_shell_command(char **command)
+int	is_shell_command(char **command)
 {
-	//ft_printf("To be done (?) later - is shell command\n");
-	//ft_printf(command[0]);
 	if (command[0] == NULL)
 		exit(1);
 	return (0);
 }
 
-static void	find_path_own_exec(char **command)
+void	find_path_own_exec(char **command)
 {
-	//ft_printf("To be done (?) later - find path own exec\n");
-	//ft_printf(command[0]);
 	if (command[0] == NULL)
 		exit(1);
 	exit (1);
 }
 
-static char	*path_strjoin(char *dir_path, char *cmd_name)
+char	*path_strjoin(char ***paths_ptr, char ***commands_ptr, int i)
 {
 	char	*slash;
 	char	*temp;
 	char	*result;
+	char	**paths;
+	char	**commands;
 
+	paths = *paths_ptr;
+	commands = *commands_ptr;
 	slash = (char *)malloc(2);
 	slash[0] = '/';
 	slash[1] = '\0';
-	temp = ft_strjoin(dir_path, slash);
-	result = ft_strjoin(temp, cmd_name);
+	temp = ft_strjoin(paths[i], slash);
+	if (temp == NULL)
+		ft_free_2_2d_arrays_and_exit("Error: Malloc fail", paths, commands);
+	result = ft_strjoin(temp, commands[0]);
+	if (result == NULL)
+	{
+		free(temp);
+		ft_free_2_2d_arrays_and_exit("Error: Malloc fail", paths, commands);
+	}
 	free(temp);
 	return (result);
-}
-
-char	*find_correct_path(char **command, char ***env)
-{
-	char		**all_paths;
-	static int	i = -1;
-	char		*full_path;
-
-	if (is_shell_command(command) == 1)
-		find_path_own_exec(command);
-	all_paths = ft_split(find_path_env_variable(env), ':');
-	if (all_paths == NULL)
-		ft_message_and_exit("Malloc fail when finding correct executable path");
-	if (i == -1)
-	{
-		if (access("/bin/bash/", X_OK) == -1)
-			i++;
-		else
-		{
-			i++;
-			return ("/bin/bash/");
-		}
-	}
-	while (all_paths[i] != NULL)
-	{
-		full_path = path_strjoin(all_paths[i], command[0]);
-		if (full_path == NULL)
-			ft_free_and_exit("Error: malloc fail", all_paths);
-		if (access(full_path, X_OK) == -1)
-			i++;
-		else
-		{
-			free_2d_array(all_paths);
-			i++;
-			return (full_path);
-		}
-	}
-	free_2d_array(all_paths);
-	return (NULL);
-}
-
-char	*find_correct_path_cmd2(char **command, char ***env)
-{
-	char		**all_paths;
-	static int	i = -1;
-	char		*full_path;
-
-	if (is_shell_command(command) == 1)
-		find_path_own_exec(command);
-	all_paths = ft_split(find_path_env_variable(env), ':');
-	if (all_paths == NULL)
-		ft_message_and_exit("Malloc fail when finding correct executable path");
-	if (i == -1)
-	{
-		if (access("/bin/bash/", X_OK) == -1)
-			i++;
-		else
-		{
-			i++;
-			return ("/bin/bash/");
-		}
-	}
-	while (all_paths[i] != NULL)
-	{
-		full_path = path_strjoin(all_paths[i], command[0]);
-		if (full_path == NULL)
-			ft_free_and_exit("Error: malloc fail", all_paths);
-		if (access(full_path, X_OK) == -1)
-			i++;
-		else
-		{
-			free_2d_array(all_paths);
-			i++;
-			return (full_path);
-		}
-	}
-	free_2d_array(all_paths);
-	return (NULL);
 }

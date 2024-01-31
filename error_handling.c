@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:43:37 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/29 16:44:14 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:15:24 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,12 @@ void	free_2d_array(char **arr)
 void	ft_free_and_exit(char *str, char **arr)
 {
 	free_2d_array(arr);
+	ft_putendl_fd(str, 2);
+}
+
+void	ft_free_2_2d_arrays_and_exit(char *str, char **arr1, char **arr2)
+{
+	free_2d_array(arr1);
+	free_2d_array(arr2);
 	ft_putendl_fd(str, 2);
 }
