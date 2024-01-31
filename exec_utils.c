@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 13:35:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 14:20:13 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,69 +51,20 @@ static void	find_path_own_exec(char **command)
 	exit (1);
 }
 
-/*char	*find_correct_path(char **command, char ***env)
+static char	*path_strjoin(char *dir_path, char *cmd_name)
 {
-	char			*paths;
-	char			**all_paths;
-	static int		i = 0;
-	char			*result;
+	char	*slash;
+	char	*temp;
+	char	*result;
 
-	if (is_shell_command(command) == 1)
-		find_path_own_exec(command);
-	paths = find_path_env_variable(env);
-	//ft_printf("string is: %s\n", paths);
-	all_paths = ft_split(paths, ':');
-	//deleteme_arr_print(all_paths);
-	if (all_paths == NULL)
-		ft_message_and_exit("Malloc fail when finding correct executable path");
-	while (all_paths[i] != NULL)
-	{
-		if (access(all_paths[i], F_OK) == -1)
-			i++;
-		else
-		{
-			result = ft_strdup(all_paths[i]);
-			free_2d_array(all_paths);
-			//ft_printf("Did we return here? Result is %s\n", result);
-			i++;
-			return (result);
-		}
-	}
-	free_2d_array(all_paths);
-	return (NULL);
-}*/
-
-/*char	*find_correct_path_cmd2(char **command, char ***env)
-{
-	char			*paths;
-	char			**all_paths;
-	static int		i = 0;
-	char			*result;
-
-	if (is_shell_command(command) == 1)
-		find_path_own_exec(command);
-	paths = find_path_env_variable(env);
-	//ft_printf("string is: %s\n", paths);
-	all_paths = ft_split(paths, ':');
-	//deleteme_arr_print(all_paths);
-	if (all_paths == NULL)
-		ft_message_and_exit("Malloc fail when finding correct executable path");
-	while (all_paths[i] != NULL)
-	{
-		if (access(all_paths[i], F_OK) == -1)
-			i++;
-		else
-		{
-			result = ft_strdup(all_paths[i]);
-			free_2d_array(all_paths);
-			//ft_printf("Did we return here? Result is %s\n", result);
-			i++;
-			return (result);
-		}
-	}
-	free_2d_array(all_paths);
-	return (NULL);
-}*/
+	slash = (char *)malloc(2);
+	slash[0] = '/';
+	slash[1] = '\0';
+	temp = ft_strjoin(dir_path, slash);
+	result = ft_strjoin(temp, cmd_name);
+	free(temp);
+	return (result);
+}
 
 char	*find_correct_path(char **command, char ***env)
 {
@@ -128,14 +79,17 @@ char	*find_correct_path(char **command, char ***env)
 		ft_message_and_exit("Malloc fail when finding correct executable path");
 	if (i == -1)
 	{
-		if (access("/bin/bash", X_OK) == -1)
+		if (access("/bin/bash/", X_OK) == -1)
 			i++;
 		else
-			return ("/bin/bash");
+		{
+			i++;
+			return ("/bin/bash/");
+		}
 	}
 	while (all_paths[i] != NULL)
 	{
-		full_path = ft_strjoin(all_paths[i], command[0]);
+		full_path = path_strjoin(all_paths[i], command[0]);
 		if (full_path == NULL)
 			ft_free_and_exit("Error: malloc fail", all_paths);
 		if (access(full_path, X_OK) == -1)
@@ -164,14 +118,17 @@ char	*find_correct_path_cmd2(char **command, char ***env)
 		ft_message_and_exit("Malloc fail when finding correct executable path");
 	if (i == -1)
 	{
-		if (access("/bin/bash", X_OK) == -1)
+		if (access("/bin/bash/", X_OK) == -1)
 			i++;
 		else
-			return ("/bin/bash");
+		{
+			i++;
+			return ("/bin/bash/");
+		}
 	}
 	while (all_paths[i] != NULL)
 	{
-		full_path = ft_strjoin(all_paths[i], command[0]);
+		full_path = path_strjoin(all_paths[i], command[0]);
 		if (full_path == NULL)
 			ft_free_and_exit("Error: malloc fail", all_paths);
 		if (access(full_path, X_OK) == -1)
