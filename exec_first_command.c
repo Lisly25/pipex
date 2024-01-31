@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:06:20 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 14:35:43 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 14:39:10 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	exec_first_command(char *file1, char *cmd1, char ***env, int *fd)
 		execve(path, command, *env);
 		free(path);
 		path = find_correct_path(command, env);
-		if (path == NULL)
-			break ;
 	}
 	ft_free_and_exit("Failed to execute command1", command);
 }
