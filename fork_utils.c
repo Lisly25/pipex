@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:40:44 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/29 16:49:55 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/01/31 11:58:27 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,26 @@ void	wait_for_children(pid_t child_1, pid_t child_2)
 		if (waitpid(child_2, &child_2_status, 0) == -1)
 			ft_message_and_exit("Error : Wait error (command 2)");
 	}
+}
+
+char	**dup_2d_arr(char **arr)
+{
+	char	**result;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (arr[i] != NULL)
+	{
+		i++;
+	}
+	result = (char **)malloc(sizeof(char *) * (i + 1));
+	while (arr[j] != NULL)
+	{
+		result[j] = ft_strdup(arr[j]);
+		j++;
+	}
+	result[j] = NULL;
+	return (result);
 }
