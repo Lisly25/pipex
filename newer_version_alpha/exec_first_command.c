@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:06:20 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 14:42:02 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:49:35 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ void	exec_first_command(t_data *data)
 	if (command == NULL)
 		ft_free_struct_and_exit("Error: Malloc fail", data, 1);
 	path = find_correct_path(&command, data);
+	if (path == NULL)
+		ft_cmd_not_found(data, command, 1);
 	while (path != NULL)
 	{
 		execve(path, command, data->env);
 		free(path);
 		path = find_correct_path(&command, data);
 	}
-	ft_free_and_exit("Failed to execute command1", command, data, 1);
+	ft_free_and_exit("Execve failed", command, data, 1);
 }

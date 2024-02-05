@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 14:46:06 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:13:31 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*get_pwd(t_data *data, char ***command_ptr)
 	return (NULL);
 }
 
-void	run_if_non_shell_command(char ***command_ptr, t_data *data)
+void	run_if_non_shell_command(char ***command_ptr, t_data *data, int cmd_nro)
 {
 	char	**command;
 	char	*pwd_path;
@@ -97,7 +97,7 @@ void	run_if_non_shell_command(char ***command_ptr, t_data *data)
 		else
 		{
 			free(pwd_path);
-			ft_free_and_exit("pipex: command not found", command, data, 1);
+			ft_cmd_not_found(data, command, cmd_nro);
 		}
 	}
 	else

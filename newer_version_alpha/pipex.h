@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 14:46:15 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:13:53 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_data
 	char	*cmd2;
 	char	*file1;
 	char	*file2;
-	char	*exit_status;
+	int		exit_status;
 }	t_data;
 
 t_data	*init_data_struct(char **argv, char **env);
@@ -40,9 +40,9 @@ void	init_pipe(t_data *data);
 
 void	init_child(t_data *data, int nro);
 
-void	ft_message_and_exit(char *str, int exit_status);
+void	ft_cmd_not_found(t_data *data, char	**arr, int cmd_nro);
 
-//void	ft_close_fds(int *fd);
+void	ft_message_and_exit(char *str, int exit_status);
 
 void	free_2d_array(char **arr);
 
@@ -51,8 +51,6 @@ void	ft_free_and_exit(char *str, char **arr, t_data *data, int e_stat);
 void	ft_free_2d_arrs_and_exit(char *str, char **arr1, char **arr2);
 
 void	ft_free_struct_and_exit(char *str, t_data *data, int exit_status);
-
-//pid_t	init_child(void);
 
 void	wait_for_children(t_data *data);
 
@@ -64,11 +62,9 @@ char	*find_correct_path(char ***command, t_data *data);
 
 char	*find_correct_path_cmd2(char ***command, t_data *data);
 
-//char	**dup_2d_arr(char **arr);
-
 char	*path_strjoin(char ***paths, char ***commands, int i, t_data *data);
 
-void	run_if_non_shell_command(char ***command_ptr, t_data *data);
+void	run_if_non_shell_command(char ***comm_ptr, t_data *data, int cmd_nro);
 
 char	**find_paths(t_data *data, char ***command);
 

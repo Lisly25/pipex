@@ -6,7 +6,7 @@
 #    By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 15:34:44 by skorbai           #+#    #+#              #
-#    Updated: 2024/02/05 11:30:26 by skorbai          ###   ########.fr        #
+#    Updated: 2024/02/05 15:34:54 by skorbai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ C_FLAGS = -Wall -Wextra -Werror
 SRCS = main.c \
 	init_utils.c \
 	fork_utils.c \
+	bash_errors.c \
 	error_handling.c \
 	exec_first_command.c \
 	exec_second_command.c \

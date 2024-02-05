@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:55:40 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 15:00:27 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:24:52 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_data	*data;
+	int		exit_status;
 
 	if (argc != 5)
 		ft_message_and_exit("Format needed: ./pipex file1 cmd1 cmd2 file2", 1);
@@ -34,5 +35,7 @@ int	main(int argc, char **argv, char **env)
 	close(data->pipe_fds[PIPE_WRITE_END]);
 	if (data->children[0] > 0)
 		wait_for_children(data);
-	exit(0);
+	exit_status = data->exit_status;
+	free(data);
+	exit(exit_status);
 }
