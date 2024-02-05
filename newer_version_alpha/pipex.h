@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 16:13:53 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:40:03 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,7 @@ char	*path_strjoin(char ***paths, char ***commands, int i, t_data *data);
 void	run_if_non_shell_command(char ***comm_ptr, t_data *data, int cmd_nro);
 
 char	**find_paths(t_data *data, char ***command);
+
+void	exec_abs_path(t_data *data, char ***command_ptr, int cmd_nro);
 
 #endif

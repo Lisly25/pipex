@@ -6,7 +6,7 @@
 #    By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 15:34:44 by skorbai           #+#    #+#              #
-#    Updated: 2024/02/05 15:34:54 by skorbai          ###   ########.fr        #
+#    Updated: 2024/02/05 16:40:19 by skorbai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS = main.c \
 	exec_first_command.c \
 	exec_second_command.c \
 	exec_find_path.c \
-	exec_utils.c
+	exec_utils.c \
+	exec_abs_path.c
 
 OBJS = $(SRCS:.c=.o)
 

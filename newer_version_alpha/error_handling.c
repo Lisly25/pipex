@@ -6,11 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:43:37 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 14:45:44 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:18:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+//do I need to close stdin and stdout before exiting? (since we did dup2). Should certainly close infile and outfile, although exit() supposedly handles that
 
 void	ft_message_and_exit(char *str, int exit_status)
 {
@@ -24,11 +26,6 @@ void	ft_free_struct_and_exit(char *str, t_data *data, int exit_status)
 	ft_putendl_fd(str, 2);
 	exit (exit_status);
 }
-/*void	ft_close_fds(int *fd)
-{
-	close(fd[PIPE_READ_END]);
-	close(fd[PIPE_WRITE_END]);
-}*/
 
 void	free_2d_array(char **arr)
 {
