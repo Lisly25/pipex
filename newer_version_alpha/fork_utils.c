@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:40:44 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 11:58:27 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:02:20 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ pid_t	init_child(void)
 
 	child = fork();
 	if (child < 0)
-		ft_message_and_exit("Error: fork() failed");
+		ft_message_and_exit("Error: fork() failed", 1);
 	return (child);
 }
 
@@ -28,11 +28,11 @@ void	wait_for_children(pid_t child_1, pid_t child_2)
 	int		child_2_status;
 
 	if (waitpid(child_1, &child_1_status, 0) == -1)
-		ft_message_and_exit("Error : Wait error (command 1)");
+		ft_message_and_exit("Error : Wait error (command 1)", 1);
 	if (child_2 > 0)
 	{
 		if (waitpid(child_2, &child_2_status, 0) == -1)
-			ft_message_and_exit("Error : Wait error (command 2)");
+			ft_message_and_exit("Error : Wait error (command 2)", 1);
 	}
 }
 

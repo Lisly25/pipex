@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:55:40 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/01 16:42:59 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:02:36 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	main(int argc, char **argv, char **env)
 
 	//cpy_env = dup_2d_arr(env);
 	if (argc != 5)
-		ft_message_and_exit("Required format: ./pipex file1 cmd1 cmd2 file2");
+		ft_message_and_exit("Required format: ./pipex file1 cmd1 cmd2 file2", 1);
 	if (pipe(fd) == -1)
-		ft_message_and_exit("Error: could not create pipe");
+		ft_message_and_exit("Error: could not create pipe", 1);
 	child_1 = init_child();
 	if (child_1 == 0)
 		exec_first_command(argv[1], argv[2], &env, fd);

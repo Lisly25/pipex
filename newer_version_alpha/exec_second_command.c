@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:09:51 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 15:57:30 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:01:31 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	exec_second_command(char *cmd2, char *file2, char ***env, int *fd)
 	close(fd[PIPE_WRITE_END]);
 	file2_fd = open(file2, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (file2_fd == -1)
-		ft_message_and_exit("Error: could not open output file");
+		ft_message_and_exit("No such file or directory", 1);
 	dup2(fd[PIPE_READ_END], STDIN_FILENO);
 	dup2(file2_fd, STDOUT_FILENO);
 	close(fd[PIPE_READ_END]);
 	close(file2_fd);
 	command = ft_split(cmd2, ' ');
 	if (command == NULL)
-		ft_message_and_exit("Malloc fail");
+		ft_message_and_exit("Malloc fail", 1);
 	path = find_correct_path_cmd2(&command, env);
 	while (path != NULL)
 	{

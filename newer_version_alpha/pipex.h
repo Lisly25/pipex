@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 10:29:07 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:58:22 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define PIPE_READ_END 0
 # define PIPE_WRITE_END 1
 
-void	ft_message_and_exit(char *str);
+void	ft_message_and_exit(char *str, int exit_status);
 
 void	ft_close_fds(int *fd);
 
