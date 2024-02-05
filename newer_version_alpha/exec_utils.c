@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/01 16:37:26 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:44:53 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	run_if_non_shell_command(char ***command_ptr, char ***env_ptr)
 	pwd_path = get_pwd(env_ptr, command_ptr);
 	if (access(pwd_path, X_OK) == 0)
 	{
-		if (command[0][0] == '.' && command[0][1] == '/')
+		if (command[0][0] == '.' && command[0][1] == '/')//change how this is checked maybe - could cause segfault if this string is less than two chars
 		{
 			if (execve(pwd_path, command, env) == -1)
 			{
@@ -103,7 +103,7 @@ void	run_if_non_shell_command(char ***command_ptr, char ***env_ptr)
 		else
 		{
 			free(pwd_path);
-			ft_message_and_exit("pipex: command not found");//when this line was instead ft_free_and_exit("pipex_command not found, command"), the code would not compile - but doesn't THIS cause a memory leak???
+			ft_free_and_exit("pipex: command not found", command);
 		}
 	}
 	else
@@ -119,7 +119,6 @@ char	*path_strjoin(char ***paths_ptr, char ***commands_ptr, int i)
 
 	paths = *paths_ptr;
 	commands = *commands_ptr;
-	ft_printf("paths: \n", paths[i]);
 	temp = ft_strjoin(paths[i], "/");
 	if (temp == NULL)
 		ft_free_2_2d_arrays_and_exit("Error: Malloc fail", paths, commands);

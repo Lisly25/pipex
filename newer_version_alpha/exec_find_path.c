@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:54:27 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/01 16:37:42 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:30:13 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*find_correct_path(char ***command, char ***env)
 
 	if (i == -1)
 	{
-		//run_if_non_shell_command(command, env);
+		run_if_non_shell_command(command, env);
 		full_path = find_bultin_path();
 		i++;
 		if (full_path != NULL)
@@ -43,9 +43,9 @@ char	*find_correct_path(char ***command, char ***env)
 			break ;
 		free(full_path);
 	}
-	free_2d_array(all_paths);
 	if (all_paths[i] == NULL)
 		return (NULL);
+	free_2d_array(all_paths);
 	return (full_path);
 }
 
@@ -57,7 +57,7 @@ char	*find_correct_path_cmd2(char ***command, char ***env)
 
 	if (i == -1)
 	{
-		//run_if_non_shell_command(command, env);
+		run_if_non_shell_command(command, env);
 		full_path = find_bultin_path();
 		i++;
 		if (full_path != NULL)
