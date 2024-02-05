@@ -6,13 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 10:44:53 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:46:06 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*pwd_strjoin(char *pwd_str, char ***commands_ptr)
+static char	*pwd_strjoin(char *pwd_str, char ***commands_ptr, t_data *data)
 {
 	char	*temp;
 	char	*result;
@@ -21,96 +21,90 @@ static char	*pwd_strjoin(char *pwd_str, char ***commands_ptr)
 	commands = *commands_ptr;
 	temp = ft_strjoin(pwd_str, "/");
 	if (temp == NULL)
-		ft_free_and_exit("Error: Malloc fail", commands);
+		ft_free_and_exit("Error: Malloc fail", commands, data, 1);
 	result = ft_strjoin(temp, commands[0]);
 	if (result == NULL)
 	{
 		free(temp);
-		ft_free_and_exit("Error: Malloc fail", commands);
+		ft_free_and_exit("Error: Malloc fail", commands, data, 1);
 	}
 	free(temp);
 	return (result);
 }
 
-char	**find_paths(char ***environmentals, char ***command)
+char	**find_paths(t_data *data, char ***command)
 {
 	int		i;
 	char	**result;
 	char	*path_str;
-	char	**env;
 
-	env = *environmentals;
 	i = 0;
-	while (env[i] != NULL)
+	while (data->env[i] != NULL)
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		if (ft_strncmp(data->env[i], "PATH=", 5) == 0)
 		{
-			path_str = ft_strchr(env[i], '/');
+			path_str = ft_strchr(data->env[i], '/');
 			result = ft_split(path_str, ':');
 			return (result);
 		}
 		else
 			i++;
 	}
-	ft_free_and_exit("Error: Failed to locate PATH", *command);
+	ft_free_and_exit("Error: Failed to locate PATH", *command, data, 1);
 	return (NULL);
 }
 
-static char	*get_pwd(char ***env_ptr, char ***command_ptr)
+static char	*get_pwd(t_data *data, char ***command_ptr)
 {
 	int		i;
-	char	**env;
 	char	**command;
 	char	*result;
 	char	*pwd_str;
 
-	env = *env_ptr;
 	command = *command_ptr;
 	i = 0;
-	while (env[i] != NULL)
+	while (data->env[i] != NULL)
 	{
-		if (ft_strncmp(env[i], "PWD=", 4) == 0)
+		if (ft_strncmp(data->env[i], "PWD=", 4) == 0)
 		{
-			pwd_str = ft_substr(env[i], 4, ft_strlen(env[i]));
-			result = pwd_strjoin(pwd_str, command_ptr);
+			pwd_str = ft_substr(data->env[i], 4, ft_strlen(data->env[i]));
+			result = pwd_strjoin(pwd_str, command_ptr, data);
 			return (result);
 		}
 		i++;
 	}
-	ft_free_and_exit("Error: Failed to locate PWD", command);
+	ft_free_and_exit("Error: Failed to locate PWD", command, data, 1);
 	return (NULL);
 }
 
-void	run_if_non_shell_command(char ***command_ptr, char ***env_ptr)
+void	run_if_non_shell_command(char ***command_ptr, t_data *data)
 {
 	char	**command;
-	char	**env;
 	char	*pwd_path;
 
 	command = *command_ptr;
-	env = *env_ptr;
-	pwd_path = get_pwd(env_ptr, command_ptr);
+	pwd_path = get_pwd(data, command_ptr);
 	if (access(pwd_path, X_OK) == 0)
 	{
 		if (command[0][0] == '.' && command[0][1] == '/')//change how this is checked maybe - could cause segfault if this string is less than two chars
 		{
-			if (execve(pwd_path, command, env) == -1)
+			if (execve(pwd_path, command, data->env) == -1)
 			{
 				free(pwd_path);
-				ft_free_and_exit("Failed to execute command", command);
+				ft_free_and_exit("Failed to execute command", command, data, 1);
 			}
 		}
 		else
 		{
 			free(pwd_path);
-			ft_free_and_exit("pipex: command not found", command);
+			ft_free_and_exit("pipex: command not found", command, data, 1);
 		}
 	}
 	else
 		free(pwd_path);
 }
 
-char	*path_strjoin(char ***paths_ptr, char ***commands_ptr, int i)
+char	*path_strjoin(char ***paths_ptr, char ***comm_ptr, int i, t_data *data)
 {
 	char	*temp;
 	char	*result;
@@ -118,15 +112,19 @@ char	*path_strjoin(char ***paths_ptr, char ***commands_ptr, int i)
 	char	**commands;
 
 	paths = *paths_ptr;
-	commands = *commands_ptr;
+	commands = *comm_ptr;
 	temp = ft_strjoin(paths[i], "/");
 	if (temp == NULL)
-		ft_free_2_2d_arrays_and_exit("Error: Malloc fail", paths, commands);
+	{
+		free(data);
+		ft_free_2d_arrs_and_exit("Error: Malloc fail", paths, commands);
+	}
 	result = ft_strjoin(temp, commands[0]);
 	if (result == NULL)
 	{
 		free(temp);
-		ft_free_2_2d_arrays_and_exit("Error: Malloc fail", paths, commands);
+		free(data);
+		ft_free_2d_arrs_and_exit("Error: Malloc fail", paths, commands);
 	}
 	free(temp);
 	return (result);

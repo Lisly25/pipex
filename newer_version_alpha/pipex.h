@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 10:58:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:46:15 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,55 @@
 # define PIPE_READ_END 0
 # define PIPE_WRITE_END 1
 
+typedef struct s_data
+{
+	char	**env;
+	pid_t	children[2];
+	int		child_count;
+	int		pipe_fds[2];
+	char	*cmd1;
+	char	*cmd2;
+	char	*file1;
+	char	*file2;
+	char	*exit_status;
+}	t_data;
+
+t_data	*init_data_struct(char **argv, char **env);
+
+void	init_pipe(t_data *data);
+
+void	init_child(t_data *data, int nro);
+
 void	ft_message_and_exit(char *str, int exit_status);
 
-void	ft_close_fds(int *fd);
+//void	ft_close_fds(int *fd);
 
 void	free_2d_array(char **arr);
 
-void	ft_free_and_exit(char *str, char **arr);
+void	ft_free_and_exit(char *str, char **arr, t_data *data, int e_stat);
 
-void	ft_free_2_2d_arrays_and_exit(char *str, char **arr1, char **arr2);
+void	ft_free_2d_arrs_and_exit(char *str, char **arr1, char **arr2);
 
-pid_t	init_child(void);
+void	ft_free_struct_and_exit(char *str, t_data *data, int exit_status);
 
-void	wait_for_children(pid_t child_1, pid_t child_2);
+//pid_t	init_child(void);
 
-void	exec_first_command(char *file1, char *cmd1, char ***env, int *fd);
+void	wait_for_children(t_data *data);
 
-void	exec_second_command(char *cmd2, char *file2, char ***env, int *fd);
+void	exec_first_command(t_data *data);
 
-char	*find_correct_path(char ***command, char ***env);
+void	exec_second_command(t_data *data);
 
-char	*find_correct_path_cmd2(char ***command, char ***env);
+char	*find_correct_path(char ***command, t_data *data);
 
-char	**dup_2d_arr(char **arr);
+char	*find_correct_path_cmd2(char ***command, t_data *data);
 
-char	*path_strjoin(char ***paths, char ***commands, int i);
+//char	**dup_2d_arr(char **arr);
 
-void	run_if_non_shell_command(char ***command_ptr, char ***env_ptr);
+char	*path_strjoin(char ***paths, char ***commands, int i, t_data *data);
 
-char	**find_paths(char ***environmentals, char ***command);
+void	run_if_non_shell_command(char ***command_ptr, t_data *data);
+
+char	**find_paths(t_data *data, char ***command);
 
 #endif
