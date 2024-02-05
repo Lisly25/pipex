@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:06:20 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 15:49:35 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:05:38 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_first_command(t_data *data)
 	close(data->pipe_fds[PIPE_READ_END]);
 	file1_fd = open(data->file1, O_RDONLY);
 	if (file1_fd == -1)
-		ft_free_struct_and_exit("No such file or directory", data, 1);
+		ft_no_such_file(data, 1);
 	dup2(file1_fd, STDIN_FILENO);
 	dup2(data->pipe_fds[PIPE_WRITE_END], STDOUT_FILENO);
 	close(data->pipe_fds[PIPE_WRITE_END]);
