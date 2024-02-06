@@ -6,19 +6,56 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:54:27 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 16:14:39 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 14:02:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_bultin_path(void)
+/*static char	**get_builtin_command(char ***og_command_ptr, t_data *data)
 {
-	if (access("/bin/bash/", X_OK) == -1)
-		return (NULL);
+	char	**result;
+	char	**og_command;
+	int		i;
+	int		j;
+
+	og_command = *og_command_ptr;
+	i = 0;
+	j = 1;
+	while (og_command[i] != NULL)
+		i++;
+	result = (char **)malloc(sizeof(char) * (i + 2));
+	if (result == NULL)
+		ft_free_and_exit("Error: Malloc fail", og_command, data, 1);
+	result[0] = "-c";
+	i = 0;
+	while (og_command[i] != NULL)
+	{
+		result[j] = og_command[i];
+		j++;
+		i++;
+	}
+	result[j] = NULL;
+	//ft_putstr_fd(result[0], 2);
+	//ft_putstr_fd(result[1], 2);
+	return (result);
+}*/
+
+/*static void	find_bultin_path(t_data *data, char ***command_ptr)
+{
+	char	**command;
+	//char	**comm_builtin_version;
+
+	command = *command_ptr;
+	//comm_builtin_version = get_builtin_command(command_ptr, data);
+	if (access("/bin/zsh", X_OK) == -1)
+		return ;
 	else
-		return ("/bin/bash/");
-}
+	{
+		if (execve("/bin/zsh", command, data->env) == -1)
+			return ;
+	}
+}*/
 
 char	*find_correct_path(char ***command, t_data *data)
 {
@@ -29,10 +66,8 @@ char	*find_correct_path(char ***command, t_data *data)
 	if (i == -1)
 	{
 		run_if_non_shell_command(command, data, 1);
-		full_path = find_bultin_path();
+		//find_bultin_path(data, command);
 		i++;
-		if (full_path != NULL)
-			return (full_path);
 	}
 	all_paths = find_paths(data, command);
 	while (all_paths[i] != NULL)
@@ -58,10 +93,8 @@ char	*find_correct_path_cmd2(char ***command, t_data *data)
 	if (i == -1)
 	{
 		run_if_non_shell_command(command, data, 2);
-		full_path = find_bultin_path();
+		//find_bultin_path(data, command);
 		i++;
-		if (full_path != NULL)
-			return (full_path);
 	}
 	all_paths = find_paths(data, command);
 	while (all_paths[i] != NULL)
