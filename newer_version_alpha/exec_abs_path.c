@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:33:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 16:39:46 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:04:26 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,26 @@
 void	exec_abs_path(t_data *data, char ***command_ptr, int cmd_nro)
 {
 	char	**command;
+	char	*path;
 
 	command = *command_ptr;
-	if (access(command[0], X_OK) == 0)
+	path = ft_strdup(command[0]);
+	if (path == NULL)
+		ft_free_and_exit("pipex: malloc error", command, data, 1);
+	if (check_for_access(data, path, command_ptr, cmd_nro) == 0)
 	{
-		if (ft_strchr(command[0], '/') != NULL)
+		if (ft_strchr(path, '/') != NULL)
 		{
-			if (execve(command[0], command, data->env) == -1)
+			if (execve(path, command, data->env) == -1)
+			{
+				free(path);
 				ft_free_and_exit("Failed to execute command", command, data, 1);
+			}
 		}
 		else
+		{
+			free(path);
 			ft_cmd_not_found(data, command, cmd_nro);
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 13:35:35 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 14:53:05 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_no_such_file(t_data *data, int cmd_nro)
 	exit(1);
 }
 
-void	ft_permission_denied(t_data *data, char **arr, int cmd_nro)
+void	ft_permission_denied_cmd(t_data *data, char **arr, int cmd_nro)
 {
 	ft_putstr_fd("pipex: permission denied: ", 2);
 	if (cmd_nro == 1)

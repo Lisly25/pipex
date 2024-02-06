@@ -6,13 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:43:37 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 16:18:51 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 14:56:14 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-//do I need to close stdin and stdout before exiting? (since we did dup2). Should certainly close infile and outfile, although exit() supposedly handles that
 
 void	ft_message_and_exit(char *str, int exit_status)
 {

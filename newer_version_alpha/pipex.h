@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 10:19:05 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:08:01 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_cmd_not_found(t_data *data, char	**arr, int cmd_nro);
 
 void	ft_no_such_file(t_data *data, int cmd_nro);
 
-void	ft_permission_denied(t_data *data, char **arr, int cmd_nro);
+void	ft_permission_denied_cmd(t_data *data, char **arr, int cmd_nro);
 
 void	ft_message_and_exit(char *str, int exit_status);
 
@@ -61,6 +61,8 @@ void	wait_for_children(t_data *data);
 void	exec_first_command(t_data *data);
 
 void	exec_second_command(t_data *data);
+
+int		check_for_access(t_data *data, char *path, char ***arr, int cmd_nro);
 
 char	*find_correct_path(char ***command, t_data *data);
 

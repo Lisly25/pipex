@@ -6,13 +6,12 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:15:06 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 15:09:41 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 14:44:44 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-//for now let's not care about the bonus and assume we had 4 arguments
 t_data	*init_data_struct(char **argv, char **env)
 {
 	t_data	*data;
