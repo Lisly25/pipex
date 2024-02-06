@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 15:04:14 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:50:20 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static char	*pwd_strjoin(char *pwd_str, char ***commands_ptr, t_data *data)
 	commands = *commands_ptr;
 	temp = ft_strjoin(pwd_str, "/");
 	if (temp == NULL)
-		ft_free_and_exit("Error: Malloc fail", commands, data, 1);
+		ft_free_and_exit("pipex: malloc error", commands, data, 1);
 	result = ft_strjoin(temp, commands[0]);
 	if (result == NULL)
 	{
 		free(temp);
-		ft_free_and_exit("Error: Malloc fail", commands, data, 1);
+		ft_free_and_exit("pipex: malloc error", commands, data, 1);
 	}
 	free(temp);
 	return (result);
@@ -50,7 +50,7 @@ char	**find_paths(t_data *data, char ***command)
 		else
 			i++;
 	}
-	ft_free_and_exit("Error: Failed to locate PATH", *command, data, 1);
+	ft_free_and_exit("pipex: Failed to locate PATH", *command, data, 1);
 	return (NULL);
 }
 
@@ -73,7 +73,7 @@ static char	*get_pwd(t_data *data, char ***command_ptr)
 		}
 		i++;
 	}
-	ft_free_and_exit("Error: Failed to locate PWD", command, data, 1);
+	ft_free_and_exit("pipex: Failed to locate PWD", command, data, 1);
 	return (NULL);
 }
 
@@ -92,7 +92,7 @@ void	run_if_non_shell_command(char ***command_ptr, t_data *data, int cmd_nro)
 			if (execve(pwd_path, command, data->env) == -1)
 			{
 				free(pwd_path);
-				ft_free_and_exit("Failed to execute command", command, data, 1);
+				ft_free_and_exit("pipex: execution failed", command, data, 1);
 			}
 		}
 		else
@@ -118,14 +118,14 @@ char	*path_strjoin(char ***paths_ptr, char ***comm_ptr, int i, t_data *data)
 	if (temp == NULL)
 	{
 		free(data);
-		ft_free_2d_arrs_and_exit("Error: Malloc fail", paths, commands);
+		ft_free_2d_arrs_and_exit("pipex: malloc error", paths, commands);
 	}
 	result = ft_strjoin(temp, commands[0]);
 	if (result == NULL)
 	{
 		free(temp);
 		free(data);
-		ft_free_2d_arrs_and_exit("Error: Malloc fail", paths, commands);
+		ft_free_2d_arrs_and_exit("pipex: malloc error", paths, commands);
 	}
 	free(temp);
 	return (result);

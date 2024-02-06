@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:15:06 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 14:44:44 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:51:00 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_pipe(t_data *data)
 	if (pipe(data->pipe_fds) == -1)
 	{
 		free(data);
-		ft_putendl_fd("Error: pipe function failed", 2);
+		ft_putendl_fd("pipex: pipe creation failed", 2);
 		exit(1);
 	}
 }
@@ -44,7 +44,7 @@ void	init_child(t_data *data, int nro)
 		if (data->children[0] < 0)
 		{
 			free(data);
-			ft_putendl_fd("Error: fork 1 failed", 2);
+			ft_putendl_fd("pipex: fork 1 failed", 2);
 			exit(1);
 		}
 		return ;
@@ -55,7 +55,7 @@ void	init_child(t_data *data, int nro)
 		if (data->children[1] < 0)
 		{
 			free(data);
-			ft_putendl_fd("Error: fork 2 failed", 2);
+			ft_putendl_fd("pipex: fork 2 failed", 2);
 			exit(1);
 		}
 		return ;

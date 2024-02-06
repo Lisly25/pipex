@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:06:20 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 11:37:58 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:47:15 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	exec_first_command(t_data *data)
 	close(file1_fd);
 	command = ft_split(data->cmd1, ' ');
 	if (command == NULL)
-		ft_free_struct_and_exit("Error: Malloc fail", data, 1);
+		ft_free_struct_and_exit("pipex: malloc error", data, 1);
 	path = find_correct_path(&command, data);
 	if (path == NULL)
 		ft_cmd_not_found(data, command, 1);
@@ -38,5 +38,5 @@ void	exec_first_command(t_data *data)
 		free(path);
 		path = find_correct_path(&command, data);
 	}
-	ft_free_and_exit("Execve failed", command, data, 1);
+	ft_free_and_exit("pipex: execution failed", command, data, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:40:44 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/05 15:23:35 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:50:34 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	wait_for_children(t_data *data)
 	if (waitpid(data->children[0], &child_1_status, 0) == -1)
 	{
 		free(data);
-		ft_message_and_exit("Error : Wait error (command 1)", 1);
+		ft_message_and_exit("pipex: Wait error (command 1)", 1);
 	}
 	if (WIFEXITED(child_1_status) == 1)
 		data->exit_status = WEXITSTATUS(child_1_status);
@@ -29,7 +29,7 @@ void	wait_for_children(t_data *data)
 		if (waitpid(data->children[1], &child_2_status, 0) == -1)
 		{
 			free(data);
-			ft_message_and_exit("Error : Wait error (command 2)", 1);
+			ft_message_and_exit("pipex: Wait error (command 2)", 1);
 		}
 	}
 	if (WIFEXITED(child_2_status) == 1)

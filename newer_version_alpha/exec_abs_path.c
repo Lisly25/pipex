@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:33:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 15:04:26 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:47:07 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	exec_abs_path(t_data *data, char ***command_ptr, int cmd_nro)
 			if (execve(path, command, data->env) == -1)
 			{
 				free(path);
-				ft_free_and_exit("Failed to execute command", command, data, 1);
+				ft_free_and_exit("pipex: execution failed", command, data, 1);
 			}
 		}
 		else
