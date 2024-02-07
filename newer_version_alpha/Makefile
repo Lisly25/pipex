@@ -6,7 +6,7 @@
 #    By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 15:34:44 by skorbai           #+#    #+#              #
-#    Updated: 2024/02/05 16:40:19 by skorbai          ###   ########.fr        #
+#    Updated: 2024/02/07 13:24:59 by skorbai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS = main.c \
 	init_utils.c \
 	fork_utils.c \
 	bash_errors.c \
+	bash_errors_pt2.c \
 	error_handling.c \
 	exec_first_command.c \
 	exec_second_command.c \

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 12:13:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 13:24:35 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	ft_no_such_file(t_data *data, int cmd_nro);
 void	ft_permission_denied_cmd(t_data *data, char **arr, int cmd_nro);
 
 void	ft_exec_format_error(t_data *data, char **arr, int cmd_nro);
+
+void	check_if_dir_error(t_data *data, int cmd_nbr, char *path, char **arr);
 
 void	ft_message_and_exit(char *str, int exit_status);
 

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 12:15:05 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 13:58:25 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	run_if_non_shell_command(char ***command_ptr, t_data *data, int cmd_nro)
 	exec_abs_path(data, command_ptr, cmd_nro);
 	if (check_for_access(data, pwd_path, command_ptr, cmd_nro) == 0)
 	{
+		check_if_dir_error(data, cmd_nro, pwd_path, command);
 		if (ft_strchr(command[0], '/') != NULL)
 		{
 			if (execve(pwd_path, command, data->env) == -1)
