@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:33:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 15:38:52 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:10:03 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_abs_path(t_data *data, char ***command_ptr, int cmd_nro)
 		ft_free_and_exit("pipex: malloc error", command, data, 1);
 	if (check_for_access(data, path, command_ptr, cmd_nro) == 0)
 	{
-		check_if_dir_error(data, cmd_nro, path, command);
+		check_if_dir_error(data, path, command);
 		if (ft_strchr(path, '/') != NULL)
 		{
 			if (execve(path, command, data->env) == -1)

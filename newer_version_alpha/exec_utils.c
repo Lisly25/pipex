@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 15:40:28 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:09:49 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,27 +83,19 @@ void	run_if_non_shell_command(char ***command_ptr, t_data *data, int cmd_nro)
 	char	*pwd_path;
 
 	command = *command_ptr;
-	pwd_path = get_pwd(data, command_ptr);
 	exec_abs_path(data, command_ptr, cmd_nro);
+	pwd_path = get_pwd(data, command_ptr);
 	if (check_for_access(data, pwd_path, command_ptr, cmd_nro) == 0)
 	{
-		check_if_dir_error(data, cmd_nro, pwd_path, command);
-		if (ft_strchr(command[0], '/') != NULL)
-		{
-			if (execve(pwd_path, command, data->env) == -1)
-			{
-				free(pwd_path);
-				ft_exec_format_error(data, command, cmd_nro);
-			}
-		}
-		else
+		check_if_dir_error(data, pwd_path, command);
+		if (execve(pwd_path, command, data->env) == -1)
 		{
 			free(pwd_path);
-			ft_cmd_not_found(data, command);
+			ft_exec_format_error(data, command, cmd_nro);
 		}
 	}
-	else
-		free(pwd_path);
+	free(pwd_path);
+	ft_no_such_file_as_cmd(data, command);
 }
 
 char	*path_strjoin(char ***paths_ptr, char ***comm_ptr, int i, t_data *data)
