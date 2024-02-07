@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 15:42:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:18:23 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,19 @@ void	ft_no_such_file(t_data *data, int cmd_nro)
 	exit(127);
 }
 
-void	ft_permission_denied_cmd(t_data *data, char **arr, int cmd_nro)
+void	ft_permission_denied_cmd(t_data *data, char **arr)
 {
 	ft_putstr_fd("pipex: permission denied: ", 2);
-	if (cmd_nro == 1)
-		ft_putendl_fd(data->cmd1, 2);
-	else
-		ft_putendl_fd(data->cmd2, 2);
+	ft_putendl_fd(arr[0], 2);
 	free(data);
 	free_2d_array(arr);
 	exit(126);
 }
 
-void	ft_exec_format_error(t_data *data, char **arr, int cmd_nro)
+void	ft_exec_format_error(t_data *data, char **arr)
 {
 	ft_putstr_fd("pipex: exec format error: ", 2);
-	if (cmd_nro == 1)
-		ft_putendl_fd(data->cmd1, 2);
-	else
-		ft_putendl_fd(data->cmd2, 2);
+	ft_putendl_fd(arr[0], 2);
 	free(data);
 	free_2d_array(arr);
 	exit(1);

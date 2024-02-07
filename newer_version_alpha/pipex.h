@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 16:09:38 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:20:59 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	ft_cmd_not_found(t_data *data, char	**arr);
 
 void	ft_no_such_file(t_data *data, int cmd_nro);
 
-void	ft_permission_denied_cmd(t_data *data, char **arr, int cmd_nro);
+void	ft_permission_denied_cmd(t_data *data, char **arr);
 
-void	ft_exec_format_error(t_data *data, char **arr, int cmd_nro);
+void	ft_exec_format_error(t_data *data, char **arr);
 
 void	ft_no_such_file_as_cmd(t_data *data, char **arr);
 
@@ -71,7 +71,7 @@ void	exec_first_command(t_data *data);
 
 void	exec_second_command(t_data *data);
 
-int		check_for_access(t_data *data, char *path, char ***arr, int cmd_nro);
+int		check_for_access(t_data *data, char *path, char ***arr);
 
 char	*find_correct_path(char ***command, t_data *data);
 
@@ -79,10 +79,10 @@ char	*find_correct_path_cmd2(char ***command, t_data *data);
 
 char	*path_strjoin(char ***paths, char ***commands, int i, t_data *data);
 
-void	run_if_non_shell_command(char ***comm_ptr, t_data *data, int cmd_nro);
+void	run_if_non_shell_command(char ***comm_ptr, t_data *data);
 
 char	**find_paths(t_data *data, char ***command);
 
-void	exec_abs_path(t_data *data, char ***command_ptr, int cmd_nro);
+void	exec_abs_path(t_data *data, char ***command_ptr);
 
 #endif
