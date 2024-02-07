@@ -6,20 +6,17 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 13:59:32 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:42:22 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_cmd_not_found(t_data *data, char	**arr, int cmd_nro)
+void	ft_cmd_not_found(t_data *data, char	**arr)
 {
-	free_2d_array(arr);
 	ft_putstr_fd("pipex: command not found: ", 2);
-	if (cmd_nro == 1)
-		ft_putendl_fd(data->cmd1, 2);
-	else
-		ft_putendl_fd(data->cmd2, 2);
+	ft_putendl_fd(arr[0], 2);
+	free_2d_array(arr);
 	free(data);
 	exit(127);
 }
@@ -55,16 +52,18 @@ static void	ft_permission_denied_file(t_data *data, int cmd_nro)
 void	ft_no_such_file(t_data *data, int cmd_nro)
 {
 	ft_permission_denied_file(data, cmd_nro);
-	if (cmd_nro == 1)
+	ft_putstr_fd("pipex: no such file or directory: ", 2);
+	/*if (cmd_nro == 1)
 		ft_putstr_fd(data->cmd1, 2);
 	else
 		ft_putstr_fd(data->cmd2, 2);
-	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(": ", 2);*/
 	if (cmd_nro == 1)
-		ft_putstr_fd(data->file1, 2);
+		ft_putendl_fd(data->file1, 2);
 	else
-		ft_putstr_fd(data->file2, 2);
-	ft_putendl_fd(": No such file or directory", 2);
+		ft_putendl_fd(data->file2, 2);
+	close(data->pipe_fds[PIPE_READ_END]);
+	close(data->pipe_fds[PIPE_WRITE_END]);
 	free(data);
 	exit(127);
 }

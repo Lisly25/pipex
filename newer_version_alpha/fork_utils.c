@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:40:44 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 11:45:54 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:36:04 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,19 @@ void	wait_for_children(t_data *data)
 		check_ch_exit_stat(child_2_status, data, 2);
 		print_bus_error(data, data->exit_status_1, 1);
 		print_bus_error(data, data->exit_status_2, 2);
+	}
+}
+
+void	check_for_empty_strings(char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (i < 5)
+	{
+		if (ft_strlen(argv[i]) > 0)
+			i++;
+		else
+			ft_message_and_exit("Error: arguments mustn't be empty strings", 1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 13:58:25 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:40:28 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*pwd_strjoin(char *pwd_str, char ***commands_ptr, t_data *data)
 	return (result);
 }
 
-char	**find_paths(t_data *data, char ***command, int cmd_nro)
+char	**find_paths(t_data *data, char ***command)
 {
 	int		i;
 	char	**result;
@@ -50,7 +50,7 @@ char	**find_paths(t_data *data, char ***command, int cmd_nro)
 		else
 			i++;
 	}
-	ft_cmd_not_found(data, *command, cmd_nro);
+	ft_cmd_not_found(data, *command);
 	return (NULL);
 }
 
@@ -99,7 +99,7 @@ void	run_if_non_shell_command(char ***command_ptr, t_data *data, int cmd_nro)
 		else
 		{
 			free(pwd_path);
-			ft_cmd_not_found(data, command, cmd_nro);
+			ft_cmd_not_found(data, command);
 		}
 	}
 	else

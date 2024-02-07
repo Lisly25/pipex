@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 13:24:35 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:40:40 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ typedef struct s_data
 	int		exit_status_2;
 }	t_data;
 
+void	check_for_empty_strings(char **argv);
+
 t_data	*init_data_struct(char **argv, char **env);
 
 void	init_pipe(t_data *data);
 
 void	init_child(t_data *data, int nro);
 
-void	ft_cmd_not_found(t_data *data, char	**arr, int cmd_nro);
+void	ft_cmd_not_found(t_data *data, char	**arr);
 
 void	ft_no_such_file(t_data *data, int cmd_nro);
 
@@ -77,7 +79,7 @@ char	*path_strjoin(char ***paths, char ***commands, int i, t_data *data);
 
 void	run_if_non_shell_command(char ***comm_ptr, t_data *data, int cmd_nro);
 
-char	**find_paths(t_data *data, char ***command, int cmd_nro);
+char	**find_paths(t_data *data, char ***command);
 
 void	exec_abs_path(t_data *data, char ***command_ptr, int cmd_nro);
 

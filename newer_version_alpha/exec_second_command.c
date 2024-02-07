@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:09:51 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 12:14:39 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:39:26 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_second_command(t_data *data)
 		ft_free_struct_and_exit("pipex: malloc error", data, 1);
 	path = find_correct_path_cmd2(&command, data);
 	if (path == NULL)
-		ft_cmd_not_found(data, command, 2);
+		ft_cmd_not_found(data, command);
 	while (path != NULL)
 	{
 		execve(path, command, data->env);
