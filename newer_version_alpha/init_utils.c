@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:15:06 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 15:51:00 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 11:15:00 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_data	*init_data_struct(char **argv, char **env)
 	data->file1 = argv[1];
 	data->file2 = argv[4];
 	data->env = env;
-	data->exit_status = 0;
+	data->exit_status_1 = 0;
+	data->exit_status_2 = 0;
 	return (data);
 }
 

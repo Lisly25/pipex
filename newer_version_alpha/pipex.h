@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 15:08:01 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 10:29:59 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct s_data
 	char	*cmd2;
 	char	*file1;
 	char	*file2;
-	int		exit_status;
+	int		exit_status_1;
+	int		exit_status_2;
 }	t_data;
 
 t_data	*init_data_struct(char **argv, char **env);

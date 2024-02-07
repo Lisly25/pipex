@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 15:29:31 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 11:47:59 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	ft_permission_denied_file(t_data *data, int cmd_nro)
 			ft_putstr_fd("pipex: permission denied: ", 2);
 			ft_putendl_fd(data->file1, 2);
 			free(data);
-			exit(1);
+			exit(126);
 		}
 		else
 			return ;
@@ -45,7 +45,7 @@ static void	ft_permission_denied_file(t_data *data, int cmd_nro)
 			ft_putstr_fd("pipex: permission denied ", 2);
 			ft_putendl_fd(data->file2, 2);
 			free(data);
-			exit(1);
+			exit(126);
 		}
 		else
 			return ;
@@ -66,7 +66,7 @@ void	ft_no_such_file(t_data *data, int cmd_nro)
 		ft_putstr_fd(data->file2, 2);
 	ft_putendl_fd(": No such file or directory", 2);
 	free(data);
-	exit(1);
+	exit(127);
 }
 
 void	ft_permission_denied_cmd(t_data *data, char **arr, int cmd_nro)
@@ -81,6 +81,6 @@ void	ft_permission_denied_cmd(t_data *data, char **arr, int cmd_nro)
 	exit(126);
 }
 
-//add error for "cannot execute binary file"
-//example:
-///bin/cat: /bin/cat: cannot execute binary file
+//have a special permission denied message for directories (with open there's an option to open a folder)
+//check if I give the same error message as the terminal when PATH is unset
+// also "zsh: exec format error: ./metal" - if execve fails (just need to edit error message)
