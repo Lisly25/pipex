@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 15:50:20 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 12:15:05 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*pwd_strjoin(char *pwd_str, char ***commands_ptr, t_data *data)
 	return (result);
 }
 
-char	**find_paths(t_data *data, char ***command)
+char	**find_paths(t_data *data, char ***command, int cmd_nro)
 {
 	int		i;
 	char	**result;
@@ -50,7 +50,7 @@ char	**find_paths(t_data *data, char ***command)
 		else
 			i++;
 	}
-	ft_free_and_exit("pipex: Failed to locate PATH", *command, data, 1);
+	ft_cmd_not_found(data, *command, cmd_nro);
 	return (NULL);
 }
 
@@ -92,7 +92,7 @@ void	run_if_non_shell_command(char ***command_ptr, t_data *data, int cmd_nro)
 			if (execve(pwd_path, command, data->env) == -1)
 			{
 				free(pwd_path);
-				ft_free_and_exit("pipex: execution failed", command, data, 1);
+				ft_exec_format_error(data, command, cmd_nro);
 			}
 		}
 		else

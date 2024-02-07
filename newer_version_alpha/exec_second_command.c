@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:09:51 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/06 15:48:46 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/07 12:14:39 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	exec_second_command(t_data *data)
 		free(path);
 		path = find_correct_path_cmd2(&command, data);
 	}
-	ft_free_and_exit("pipex: execution failed", command, data, 1);
+	ft_exec_format_error(data, command, 2);
 }
