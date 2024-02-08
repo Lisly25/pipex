@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 16:20:59 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/08 11:51:22 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ typedef struct s_data
 	int		exit_status_2;
 }	t_data;
 
-void	check_for_empty_strings(char **argv);
-
 t_data	*init_data_struct(char **argv, char **env);
 
 void	init_pipe(t_data *data);
@@ -52,6 +50,10 @@ void	ft_permission_denied_cmd(t_data *data, char **arr);
 void	ft_exec_format_error(t_data *data, char **arr);
 
 void	ft_no_such_file_as_cmd(t_data *data, char **arr);
+
+void	check_empty_file_arg(t_data *data, int child);
+
+void	check_empty_cmd_arg(t_data *data, int child);
 
 void	check_if_dir_error(t_data *data, char *path, char **arr);
 

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:55:40 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 15:31:02 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/08 11:59:11 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 5)
 		ft_message_and_exit("Format needed: ./pipex file1 cmd1 cmd2 file2", 1);
-	check_for_empty_strings(argv);
 	data = init_data_struct(argv, env);
 	init_pipe(data);
 	init_child(data, 1);
