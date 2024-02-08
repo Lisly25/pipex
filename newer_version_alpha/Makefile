@@ -6,7 +6,7 @@
 #    By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 15:34:44 by skorbai           #+#    #+#              #
-#    Updated: 2024/02/08 11:41:47 by skorbai          ###   ########.fr        #
+#    Updated: 2024/02/08 16:56:26 by skorbai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,23 @@ SRCS = main.c \
 	exec_utils.c \
 	exec_abs_path.c
 
+BONUS_SRCS = main_bonus.c \
+	init_utils_bonus.c \
+	fork_utils_bonus.c \
+	bash_errors_bonus.c \
+	bash_errors_pt2_bonus.c \
+	error_handling_bonus.c \
+	empty_str_errors_bonus.c \
+	heredoc_bonus.c \
+	exec_second_command_bonus.c \
+	exec_find_path_bonus.c \
+	exec_utils_bonus.c \
+	exec_abs_path_bonus.c \
+	vector_bonus.c
+
 OBJS = $(SRCS:.c=.o)
+
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 LIBFT = libft/libft.a
 
@@ -44,6 +60,8 @@ $(NAME) : $(OBJS) $(LIBFT)
 
 clean:
 	rm -f $(OBJS)
+	rm -f $(BONUS_OBJS)
+	@rm -f .bonus
 	make clean -C ./libft
 
 fclean: clean 
@@ -52,6 +70,12 @@ fclean: clean
 
 re: fclean all
 
+bonus: .bonus
+
+.bonus: $(BONUS_OBJS) $(LIBFT)
+	cc $(C_FLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
+	@touch .bonus
+
 my_make: all
 	make clean
 
@@ -59,5 +83,5 @@ fsanitize: $(OBJS) $(LIBFT)
 	cc $(C_FLAGS) -fsanitize=address -g $(OBJS) $(LIBFT) -o $(NAME)
 	make clean
 
-.PHONY: all clean fclean re my_make fsanitize
+.PHONY: all clean fclean re my_make fsanitize bonus
 	

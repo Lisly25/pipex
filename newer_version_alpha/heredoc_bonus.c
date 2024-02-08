@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:05:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/08 14:46:34 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/08 16:42:36 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ static void	init_fds_cmd1(t_data *data)
 
 static void	write_hdoc_to_temp(t_data *data, t_vector *hdoc)
 {
-	int	temp_fd;
-	int	i;
+	int		temp_fd;
+	size_t	i;
 
+	i = 0;
 	temp_fd = open("pipex_temp", O_CREAT | O_RDWR, 0666);
-	while (hdoc->text[i] != NULL)
+	while (i < hdoc->used_nodes)
 	{
 		ft_putstr_fd(hdoc->text[i], temp_fd);
 		i++;
@@ -78,7 +79,7 @@ static void	exec_first_command_heredoc(t_data *data)
 	hdoc = vector_new(1);
 	if (hdoc == NULL)
 		ft_free_struct_and_exit("pipex: malloc error", data, 1);
-	i = -1;
+	i = 0;
 	while (i == 0)
 	{
 		str = get_next_line(STDIN_FILENO);
@@ -87,11 +88,10 @@ static void	exec_first_command_heredoc(t_data *data)
 			free_vector(hdoc);
 			ft_free_struct_and_exit("pipex: malloc error", data, 1);
 		}
-		if ((ft_strlen(str) == 1) && (ft_strncmp(data->delimiter, str, 1) == 0))
+		if ((ft_strlen(str) == 2) && (str[0] == data->delimiter[0]))
 			break ;
 		if (vector_add_back(hdoc, str) == 1)
 			ft_free_struct_and_exit("pipex: malloc error", data, 1);
-		free(str);
 	}
 	write_hdoc_to_temp(data, hdoc);
 	exec_hdoc(data);
