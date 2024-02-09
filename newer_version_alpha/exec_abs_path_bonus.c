@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:57:55 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/08 14:58:18 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:59:00 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	exec_abs_path(t_data *data, char ***command_ptr)
 			ft_cmd_not_found(data, command);
 		}
 	}
+	free(path);
 }

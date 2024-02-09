@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:54:27 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 16:21:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:42:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ char	*find_correct_path(char ***command, t_data *data)
 		full_path = path_strjoin(&all_paths, command, i, data);
 		i++;
 		if (check_for_access(data, full_path, command) == 0)
-			break ;
+		{
+			free_2d_array(all_paths);
+			return (full_path);
+		}
 		free(full_path);
 	}
-	if (all_paths[i] == NULL)
-		return (NULL);
 	free_2d_array(all_paths);
-	return (full_path);
+	return (NULL);
 }
 
 char	*find_correct_path_cmd2(char ***command, t_data *data)
@@ -75,11 +76,12 @@ char	*find_correct_path_cmd2(char ***command, t_data *data)
 		full_path = path_strjoin(&all_paths, command, i, data);
 		i++;
 		if (check_for_access(data, full_path, command) == 0)
-			break ;
+		{
+			free_2d_array(all_paths);
+			return (full_path);
+		}
 		free(full_path);
 	}
 	free_2d_array(all_paths);
-	if (all_paths[i] == NULL)
-		return (NULL);
-	return (full_path);
+	return (NULL);
 }
