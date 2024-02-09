@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:05:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/09 12:04:34 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:12:42 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	create_temp(t_data *data)
 	i = 0;
 	while (i == 0)
 	{
+		ft_putstr_fd("pipex heredoc> ", 1);
 		str = get_next_line(STDIN_FILENO);
 		if (str == NULL)
 		{
