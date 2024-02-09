@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:19:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 16:20:50 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:53:26 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static char	*get_pwd(t_data *data, char ***command_ptr)
 		{
 			pwd_str = ft_substr(data->env[i], 4, ft_strlen(data->env[i]));
 			result = pwd_strjoin(pwd_str, command_ptr, data);
+			free(pwd_str);
 			return (result);
 		}
 		i++;
