@@ -6,11 +6,31 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:05:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/09 12:12:42 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 16:54:45 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+static int	strcmp_limiter(char *str, char *limiter)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\n' && limiter[i] != '\0')
+	{
+		if (str[i] == limiter[i])
+			i++;
+		else
+			break ;
+	}
+	if (i != ft_strlen(limiter))
+		return (-1);
+	else if (str[i] != '\n')
+		return (-1);
+	i--;
+	return (str[i] - limiter[i]);
+}
 
 static void	write_hdoc_to_temp(t_data *data, t_vector *hdoc)
 {
@@ -54,7 +74,7 @@ void	create_temp(t_data *data)
 			free_vector(hdoc);
 			ft_free_struct_and_exit("pipex: malloc error", data, 1);
 		}
-		if ((ft_strlen(str) == 2) && (str[0] == data->delimiter[0]))
+		if (strcmp_limiter(str, data->delimiter) == 0)
 			break ;
 		if (vector_add_back(hdoc, str) == 1)
 			ft_free_struct_and_exit("pipex: malloc error", data, 1);
