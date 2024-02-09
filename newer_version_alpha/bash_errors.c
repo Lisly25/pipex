@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/07 16:41:19 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:07:50 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,6 @@ void	ft_no_such_file(t_data *data, int cmd_nro)
 {
 	ft_permission_denied_file(data, cmd_nro);
 	ft_putstr_fd("pipex: no such file or directory: ", 2);
-	/*if (cmd_nro == 1)
-		ft_putstr_fd(data->cmd1, 2);
-	else
-		ft_putstr_fd(data->cmd2, 2);
-	ft_putstr_fd(": ", 2);*/
 	if (cmd_nro == 1)
 		ft_putendl_fd(data->file1, 2);
 	else
