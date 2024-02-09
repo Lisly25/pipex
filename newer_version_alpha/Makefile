@@ -6,7 +6,7 @@
 #    By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 15:34:44 by skorbai           #+#    #+#              #
-#    Updated: 2024/02/08 16:56:26 by skorbai          ###   ########.fr        #
+#    Updated: 2024/02/09 11:56:02 by skorbai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ BONUS_SRCS = main_bonus.c \
 	error_handling_bonus.c \
 	empty_str_errors_bonus.c \
 	heredoc_bonus.c \
+	exec_first_command_bonus.c \
 	exec_second_command_bonus.c \
 	exec_find_path_bonus.c \
 	exec_utils_bonus.c \

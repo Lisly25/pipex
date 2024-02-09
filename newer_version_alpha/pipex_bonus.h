@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:06:35 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/08 13:34:49 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 11:55:26 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_data
 	int		exit_status_1;
 	int		exit_status_2;
 }	t_data;
+
+void	check_if_heredoc(t_data *data);
 
 t_data	*init_data_struct(char **argv, char **env);
 
