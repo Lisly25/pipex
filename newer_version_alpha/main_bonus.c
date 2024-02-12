@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:39:34 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/09 11:52:47 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/12 10:42:19 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	main(int argc, char **argv, char **env)
 	t_data	*data;
 	int		exit_status;
 
-	if (argc != 6)//this is just for heredoc
-		ft_message_and_exit("Format needed: ./pipex here_doc DELIMITER cmd1 cmd2 file2", 1);
+	if (argc < 5)
+		ft_message_and_exit("pipex: error: invalid format", 1);
 	data = init_data_struct(argv, env);
 	check_if_heredoc(data);
 	init_pipe(data);

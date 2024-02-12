@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:55:40 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/08 11:59:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/12 10:35:58 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ int	main(int argc, char **argv, char **env)
 		wait_for_children(data);
 	exit_status = data->exit_status_2;
 	free(data);
-	//while (1) { }
 	exit(exit_status);
 }

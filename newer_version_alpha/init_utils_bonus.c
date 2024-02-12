@@ -6,25 +6,36 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:48:17 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/09 11:55:17 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/12 10:14:13 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-t_data	*init_data_struct(char **argv, char **env)//modified only for the heredoc case which overall should have 
+t_data	*init_data_struct(char **argv, char **env)
 {
 	t_data	*data;
+	size_t	file1_len;
 
 	data = (t_data *)malloc(sizeof(t_data));
-	data->cmd1 = argv[3];
-	data->cmd2 = argv[4];
-	data->file1 = argv[1];
-	data->file2 = argv[5];
-	data->delimiter = argv[2];
 	data->env = env;
 	data->exit_status_1 = 0;
 	data->exit_status_2 = 0;
+	data->file1 = argv[1];
+	file1_len = ft_strlen(data->file1);
+	if (ft_strncmp(data->file1, "here_doc", file1_len) == 0)
+	{
+		data->file2 = argv[5];
+		data->cmd1 = argv[3];
+		data->cmd2 = argv[4];
+		data->delimiter = argv[2];
+	}
+	else
+	{
+		data->file2 = argv[4];
+		data->cmd1 = argv[2];
+		data->cmd2 = argv[3];
+	}
 	return (data);
 }
 

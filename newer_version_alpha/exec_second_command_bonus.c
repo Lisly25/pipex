@@ -6,18 +6,31 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:56:34 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/09 11:30:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/12 10:37:52 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+static int	open_outfile(t_data *data)
+{
+	int		file2_fd;
+	size_t	file1_len;
+
+	file1_len = ft_strlen(data->file1);
+	if (ft_strncmp(data->file1, "here_doc", file1_len) == 0)
+		file2_fd = open(data->file2, O_CREAT | O_APPEND | O_WRONLY, 0644);
+	else
+		file2_fd = open(data->file2, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	return (file2_fd);
+}
 
 static void	init_fds_cmd2(t_data *data)
 {
 	int	file2_fd;
 
 	close(data->pipe_fds[PIPE_WRITE_END]);
-	file2_fd = open(data->file2, O_CREAT | O_APPEND | O_WRONLY, 0666);
+	file2_fd = open_outfile(data);
 	if (file2_fd == -1)
 		ft_no_such_file(data, 1);
 	if (dup2(data->pipe_fds[PIPE_READ_END], STDIN_FILENO) == -1)
