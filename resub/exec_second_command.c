@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:09:51 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/09 10:44:14 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/13 12:35:56 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	init_fds_cmd2(t_data *data)
 	close(data->pipe_fds[PIPE_WRITE_END]);
 	file2_fd = open(data->file2, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (file2_fd == -1)
-		ft_no_such_file(data, 1);
+		ft_no_such_file(data, 2);
 	if (dup2(data->pipe_fds[PIPE_READ_END], STDIN_FILENO) == -1)
 	{
 		ft_putendl_fd("pipex: dup2 error", 2);
