@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 14:48:17 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/13 12:25:42 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/16 10:08:07 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	init_pipe(t_data *data)
 	}
 }
 
+static void	close_pipe(t_data *data, int child_nro)
+{
+	close(data->pipe_fds[PIPE_READ_END]);
+	if (child_nro == 1)
+		close(data->pipe_fds[PIPE_WRITE_END]);
+}
+
 void	init_child(t_data *data, int nro)
 {
 	if (nro == 1)
@@ -58,6 +65,7 @@ void	init_child(t_data *data, int nro)
 		data->children[0] = fork();
 		if (data->children[0] < 0)
 		{
+			close_pipe(data, 1);
 			free(data);
 			ft_putendl_fd("pipex: fork 1 failed", 2);
 			exit(1);
@@ -69,6 +77,7 @@ void	init_child(t_data *data, int nro)
 		data->children[1] = fork();
 		if (data->children[1] < 0)
 		{
+			close_pipe(data, 2);
 			free(data);
 			ft_putendl_fd("pipex: fork 2 failed", 2);
 			exit(1);

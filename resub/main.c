@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:55:40 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/12 10:35:58 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/16 10:05:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **env)
 			exec_second_command(data);
 	}
 	close(data->pipe_fds[PIPE_READ_END]);
-	close(data->pipe_fds[PIPE_WRITE_END]);
 	if (data->children[0] > 0)
 		wait_for_children(data);
 	exit_status = data->exit_status_2;
