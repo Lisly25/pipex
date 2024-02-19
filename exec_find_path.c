@@ -6,74 +6,82 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:54:27 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 15:58:02 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:42:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_bultin_path(void)
+int	check_for_access(t_data *data, char *path, char ***arr_ptr)
 {
-	if (access("/bin/bash/", X_OK) == -1)
-		return (NULL);
-	else
-		return ("/bin/bash/");
+	char	**arr;
+
+	arr = *arr_ptr;
+	if (access(path, F_OK) == 0)
+	{
+		if (access(path, X_OK) == 0)
+			return (0);
+		else
+		{
+			free(path);
+			ft_permission_denied_cmd(data, arr);
+		}
+	}
+	return (1);
 }
 
-char	*find_correct_path(char ***command, char ***env)
+char	*find_correct_path(char ***command, t_data *data)
 {
 	char		**all_paths;
 	static int	i = -1;
 	char		*full_path;
 
-	run_if_shell_command(command, env);
 	if (i == -1)
 	{
-		full_path = find_bultin_path();
+		if (ft_strchr(data->cmd1, '/') != NULL)
+			run_if_non_shell_command(command, data);
 		i++;
-		if (full_path != NULL)
-			return (full_path);
 	}
-	all_paths = find_paths(env, command);
+	all_paths = find_paths(data, command);
 	while (all_paths[i] != NULL)
 	{
-		full_path = path_strjoin(&all_paths, command, i);
+		full_path = path_strjoin(&all_paths, command, i, data);
 		i++;
-		if (access(full_path, X_OK) == 0)
-			break ;
+		if (check_for_access(data, full_path, command) == 0)
+		{
+			free_2d_array(all_paths);
+			return (full_path);
+		}
 		free(full_path);
 	}
 	free_2d_array(all_paths);
-	if (all_paths[i] == NULL)
-		return (NULL);
-	return (full_path);
+	return (NULL);
 }
 
-char	*find_correct_path_cmd2(char ***command, char ***env)
+char	*find_correct_path_cmd2(char ***command, t_data *data)
 {
 	char		**all_paths;
 	static int	i = -1;
 	char		*full_path;
 
-	run_if_shell_command(command, env);
 	if (i == -1)
 	{
-		full_path = find_bultin_path();
+		if (ft_strchr(data->cmd2, '/') != NULL)
+			run_if_non_shell_command(command, data);
 		i++;
-		if (full_path != NULL)
-			return (full_path);
 	}
-	all_paths = find_paths(env, command);
+	all_paths = find_paths(data, command);
 	while (all_paths[i] != NULL)
 	{
-		full_path = path_strjoin(&all_paths, command, i);
+		full_path = path_strjoin(&all_paths, command, i, data);
 		i++;
-		if (access(full_path, X_OK) == 0)
-			break ;
+		if (check_for_access(data, full_path, command) == 0)
+		{
+			free_2d_array(all_paths);
+			return (full_path);
+		}
 		free(full_path);
 	}
 	free_2d_array(all_paths);
-	if (all_paths[i] == NULL)
-		return (NULL);
-	return (full_path);
+	return (NULL);
 }

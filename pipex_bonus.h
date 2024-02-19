@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 14:56:14 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/13 10:46:53 by skorbai          ###   ########.fr       */
+/*   Created: 2024/02/07 14:06:35 by skorbai           #+#    #+#             */
+/*   Updated: 2024/02/16 11:17:43 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "libft/libft.h"
+# include "vector.h"
 # include <fcntl.h>
 # include <sys/wait.h>
 
@@ -27,11 +28,16 @@ typedef struct s_data
 	int		pipe_fds[2];
 	char	*cmd1;
 	char	*cmd2;
+	char	*delimiter;
 	char	*file1;
 	char	*file2;
 	int		exit_status_1;
 	int		exit_status_2;
 }	t_data;
+
+int		check_arg_validity(char **argv, int argc);
+
+void	check_if_heredoc(t_data *data);
 
 t_data	*init_data_struct(char **argv, char **env);
 

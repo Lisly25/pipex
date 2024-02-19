@@ -6,35 +6,59 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:09:51 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 15:57:30 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/13 12:35:56 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	exec_second_command(char *cmd2, char *file2, char ***env, int *fd)
+static void	init_fds_cmd2(t_data *data)
 {
-	int		file2_fd;
+	int	file2_fd;
+
+	close(data->pipe_fds[PIPE_WRITE_END]);
+	file2_fd = open(data->file2, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	if (file2_fd == -1)
+		ft_no_such_file(data, 2);
+	if (dup2(data->pipe_fds[PIPE_READ_END], STDIN_FILENO) == -1)
+	{
+		ft_putendl_fd("pipex: dup2 error", 2);
+		close(data->pipe_fds[PIPE_READ_END]);
+		close(file2_fd);
+		free(data);
+		exit(1);
+	}
+	if (dup2(file2_fd, STDOUT_FILENO) == -1)
+	{
+		ft_putendl_fd("pipex: dup2 error", 2);
+		close(data->pipe_fds[PIPE_READ_END]);
+		close(file2_fd);
+		free(data);
+		exit(1);
+	}
+	close(data->pipe_fds[PIPE_READ_END]);
+	close(file2_fd);
+}
+
+void	exec_second_command(t_data *data)
+{
 	char	**command;
 	char	*path;
 
-	close(fd[PIPE_WRITE_END]);
-	file2_fd = open(file2, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	if (file2_fd == -1)
-		ft_message_and_exit("Error: could not open output file");
-	dup2(fd[PIPE_READ_END], STDIN_FILENO);
-	dup2(file2_fd, STDOUT_FILENO);
-	close(fd[PIPE_READ_END]);
-	close(file2_fd);
-	command = ft_split(cmd2, ' ');
+	check_empty_file_arg(data, 2);
+	init_fds_cmd2(data);
+	check_empty_cmd_arg(data, 2);
+	command = ft_split(data->cmd2, ' ');
 	if (command == NULL)
-		ft_message_and_exit("Malloc fail");
-	path = find_correct_path_cmd2(&command, env);
+		ft_free_struct_and_exit("pipex: malloc error", data, 1);
+	path = find_correct_path_cmd2(&command, data);
+	if (path == NULL)
+		ft_cmd_not_found(data, command);
 	while (path != NULL)
 	{
-		execve(path, command, *env);
+		execve(path, command, data->env);
 		free(path);
-		path = find_correct_path_cmd2(&command, env);
+		path = find_correct_path_cmd2(&command, data);
 	}
-	ft_free_and_exit("Failed to execute cmd 2", command);
+	ft_exec_format_error(data, command);
 }

@@ -6,54 +6,96 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:40:44 by skorbai           #+#    #+#             */
-/*   Updated: 2024/01/31 11:58:27 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/08 11:51:03 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-pid_t	init_child(void)
+static void	check_ch_exit_stat(int child_status, t_data *data, int child_nro)
 {
-	pid_t	child;
+	int	exit_status;
 
-	child = fork();
-	if (child < 0)
-		ft_message_and_exit("Error: fork() failed");
-	return (child);
+	if (WIFSIGNALED(child_status) == 1)
+	{
+		exit_status = WTERMSIG(child_status);
+		if (child_nro == 1)
+			data->exit_status_1 = exit_status;
+		else
+			data->exit_status_2 = exit_status;
+		return ;
+	}
+	if (WIFEXITED(child_status) == 1)
+	{
+		exit_status = WEXITSTATUS(child_status);
+		if (child_nro == 1)
+			data->exit_status_1 = exit_status;
+		else
+			data->exit_status_2 = exit_status;
+	}
 }
 
-void	wait_for_children(pid_t child_1, pid_t child_2)
+static void	print_segfault(t_data *data, int exit_status, int cmd_nro)
+{
+	if (exit_status == 11)
+	{
+		ft_putstr_fd("pipex: segmentation fault ", 2);
+		if (cmd_nro == 1)
+		{
+			ft_putendl_fd(data->cmd1, 2);
+			data->exit_status_1 = 139;
+		}
+		else
+		{
+			ft_putendl_fd(data->cmd2, 2);
+			data->exit_status_2 = 139;
+		}
+	}
+}
+
+static void	print_bus_error(t_data *data, int exit_status, int cmd_nro)
+{
+	if (exit_status == 10)
+	{
+		ft_putstr_fd("pipex: bus error ", 2);
+		if (cmd_nro == 1)
+		{
+			ft_putstr_fd(data->cmd1, 2);
+			ft_putchar_fd(' ', 2);
+			ft_putendl_fd(data->file1, 2);
+			data->exit_status_1 = 138;
+		}
+		else
+		{
+			ft_putstr_fd(data->cmd2, 2);
+			ft_putchar_fd(' ', 2);
+			ft_putendl_fd(data->file2, 2);
+			data->exit_status_2 = 138;
+		}
+	}
+	print_segfault(data, exit_status, cmd_nro);
+}
+
+void	wait_for_children(t_data *data)
 {
 	int		child_1_status;
 	int		child_2_status;
 
-	if (waitpid(child_1, &child_1_status, 0) == -1)
-		ft_message_and_exit("Error : Wait error (command 1)");
-	if (child_2 > 0)
+	if (waitpid(data->children[0], &child_1_status, 0) == -1)
 	{
-		if (waitpid(child_2, &child_2_status, 0) == -1)
-			ft_message_and_exit("Error : Wait error (command 2)");
+		free(data);
+		ft_message_and_exit("pipex: Wait error (command 1)", 1);
 	}
-}
-
-char	**dup_2d_arr(char **arr)
-{
-	char	**result;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (arr[i] != NULL)
+	check_ch_exit_stat(child_1_status, data, 1);
+	if (data->children[1] > 0)
 	{
-		i++;
+		if (waitpid(data->children[1], &child_2_status, 0) == -1)
+		{
+			free(data);
+			ft_message_and_exit("pipex: Wait error (command 2)", 1);
+		}
+		check_ch_exit_stat(child_2_status, data, 2);
+		print_bus_error(data, data->exit_status_1, 1);
+		print_bus_error(data, data->exit_status_2, 2);
 	}
-	result = (char **)malloc(sizeof(char *) * (i + 1));
-	while (arr[j] != NULL)
-	{
-		result[j] = ft_strdup(arr[j]);
-		j++;
-	}
-	result[j] = NULL;
-	return (result);
 }
